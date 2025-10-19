@@ -21,6 +21,7 @@ export default defineComponent({
   setup(props) {
     const { isPending, isError, isFetching, data, error } = useQuery({
       queryKey: ['post', props.postId],
+      // queryKey: ['post', () => props.postId], // Fix!
       queryFn: () => fetcher(props.postId),
     })
 
@@ -32,6 +33,8 @@ export default defineComponent({
 <template>
   <h1>Post {{ postId }}</h1>
   <a @click="$emit('setPostId', -1)" href="#"> Back </a>
+  <br>
+  <a @click="$emit('setPostId', 2)" href="#"> Go to Post 2</a>
   <div v-if="isPending" class="update">Loading...</div>
   <div v-else-if="isError">An error has occurred: {{ error }}</div>
   <div v-else-if="data">
